@@ -9,8 +9,8 @@ morgan.token("pb", (req, res) => {
   return JSON.stringify(req.body);
 });
 
-app.use(express.static('build'))
-app.use(cors())
+app.use(express.static("build"));
+app.use(cors());
 app.use(express.json());
 app.use(
   morgan(":method :url :status :res[content-length] - :response-time ms :pb")
@@ -92,7 +92,10 @@ app.put("/api/persons/:id", (req, res, next) => {
     name: body.name,
     number: body.number,
   };
-  Person.findByIdAndUpdate(req.params.id, person, { new: true })
+  Person.findByIdAndUpdate(req.params.id, person, {
+    new: true,
+    runValidators: true,
+  })
     .then((updatePerson) => {
       res.json(updatePerson);
     })
